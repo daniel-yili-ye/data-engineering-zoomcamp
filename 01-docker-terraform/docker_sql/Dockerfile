@@ -1,8 +1,10 @@
-FROM python:3.10
+FROM python:3.12
 
-RUN pip install pandas
+RUN apt-get update && apt-get install -y wget
+RUN pip install --upgrade pip
+RUN pip install pandas sqlalchemy psycopg2 pyarrow  # Added pyarrow
 
 WORKDIR /app
-COPY pipeline.py pipeline.py
+COPY ingest-data.py ingest-data.py
 
-ENTRYPOINT [ "python", "pipeline.py" ]
+ENTRYPOINT [ "python", "ingest-data.py" ]
